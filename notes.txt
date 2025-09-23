@@ -1,0 +1,33 @@
+AlignArrayOfStructures: Right
+    - aligns elements of arrays, right justified
+
+AlignAfterOpenBracket: Right
+    - Maybe, was Align
+
+AlignOperands: Align
+    - In conjunction with BreakBeforeBinaryOperator
+
+BreakBeforeBraces: Attach
+    - I prefer Allman
+
+PadOperators: False
+    - In conjunction with another
+
+PointerAlignment: Right
+
+SpaceAroundPointerQualifiers: Default
+    - Works with PointerAlignment
+
+SpaceAfterCStyleCast: true
+
+SpaceAfterOperatorKeyword: true
+
+SpaceBeforeAssignmentOperators: true
+    - int a = 5;  vs int a= 5
+
+SpaceBeforeParens: Custom
+SpaceBeforeParensOptions:
+  AfterControlStatements: true
+  AfterForeachMacros: false
+  AfterFunctionDeclarationName: false
+  AfterFunctionDefinitionName: false
