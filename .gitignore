@@ -51,6 +51,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 .*.sw[op]
+.DS_Store
 
 # debug information files
 *.dwo
