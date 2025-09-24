@@ -41,6 +41,8 @@ if (x == y)
     struct simple_ll_node *seg = NULL;
 // Not this
     struct simple_ll_node * seg = NULL;
+// Not this
+    struct simple_ll_node* seg = NULL;
 
 // This
     opt_res->slope = (PyArrayObject *) PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);

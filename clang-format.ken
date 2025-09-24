@@ -1,19 +1,24 @@
 BasedOnStyle: LLVM
-IndentWidth: 4
-BraceWrapping:
-  AfterControlStatement: true
-  AfterFunction: false
-  AfterClass: false
-  AfterEnum: false
-  AfterNamespace: false
-  AfterStruct: false
-  AfterUnion: false
-  BeforeCatch: false
-  BeforeElse: false
-  IndentBraces: false
+AlignAfterOpenBracket: AlwaysBreak
+AlignConsecutiveMacros: true
+AllowAllArgumentsOnNextLine: true
+AlwaysBreakAfterReturnType: None
+AlwaysBreakAfterDefinitionReturnType: TopLevel
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Inline
-BreakBeforeBinaryOperators: NonAssignment
+BraceWrapping:
+  # AfterControlStatement: true
+  AfterFunction: true
+BreakBeforeBraces: Custom
+# BreakBeforeBinaryOperators: NonAssignment
 ColumnLimit: 100
 IndentCaseLabels: true
+IndentWidth: 4
+InsertBraces: true
+PointerAlignment: Right
+ReflowComments: true
+SpaceAfterCStyleCast: true
+SpaceBeforeParens: ControlStatements
+TabWidth: 4
+UseTab: Never

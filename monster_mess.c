@@ -123,6 +123,9 @@ printf("bigCalc=%f\n",bigCalc);
 
 double mm=messyMath(3,5,7,9);printf("messyMath=%f\n",mm);
 
+Point*np=(Point*)calloc(1,sizeof(*np));
+if(np)free(np);
+np=NULL;
 
 return 0;}
 
