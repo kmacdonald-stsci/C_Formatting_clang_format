@@ -7,6 +7,12 @@
 // then made some minor modifications.  I prefer these rules as defensive
 // coding strategies, as well as readability.
 
+
+/*
+        Command line example:
+clang-format -style='file:./clang-format.ken' monster_mess.c > monster_mess_ken.c
+ */
+
 //              Curly brackets
 // 
 // XXX We will use this.
