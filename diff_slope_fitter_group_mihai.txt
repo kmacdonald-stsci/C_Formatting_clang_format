@@ -1,0 +1,562 @@
+83,84c83,84
+< #define BSWAP32(X)                                                                                 \
+<     ((((X) & 0xff000000) >> 24) | (((X) & 0x00ff0000) >> 8) | (((X) & 0x0000ff00) << 8) |          \
+---
+> #define BSWAP32(X)                                                                        \
+>     ((((X) & 0xff000000) >> 24) | (((X) & 0x00ff0000) >> 8) | (((X) & 0x0000ff00) << 8) | \
+88,91c88,91
+< #define SET_FREE(X)                                                                                \
+<     if (X) {                                                                                       \
+<         free(X);                                                                                   \
+<         (X) = NULL;                                                                                \
+---
+> #define SET_FREE(X) \
+>     if (X) {        \
+>         free(X);    \
+>         (X) = NULL; \
+93,96c93,96
+< #define FCLOSE(FD)                                                                                 \
+<     if (FD) {                                                                                      \
+<         fclose(FD);                                                                                \
+<         (FD) = NULL;                                                                               \
+---
+> #define FCLOSE(FD)   \
+>     if (FD) {        \
+>         fclose(FD);  \
+>         (FD) = NULL; \
+105,109c105,109
+< #define FREE_RAMP_DATA(RD)                                                                         \
+<     if (RD) {                                                                                      \
+<         clean_ramp_data(rd);                                                                       \
+<         free(RD);                                                                                  \
+<         (RD) = NULL;                                                                               \
+---
+> #define FREE_RAMP_DATA(RD)   \
+>     if (RD) {                \
+>         clean_ramp_data(rd); \
+>         free(RD);            \
+>         (RD) = NULL;         \
+118,121c118,121
+< #define FREE_PIXEL_RAMP(PR)                                                                        \
+<     if (PR) {                                                                                      \
+<         clean_pixel_ramp(PR);                                                                      \
+<         SET_FREE(PR);                                                                              \
+---
+> #define FREE_PIXEL_RAMP(PR)   \
+>     if (PR) {                 \
+>         clean_pixel_ramp(PR); \
+>         SET_FREE(PR);         \
+130,133c130,133
+< #define FREE_SEGS_LIST(N, S)                                                                       \
+<     if (S) {                                                                                       \
+<         clean_segment_list(N, S);                                                                  \
+<         SET_FREE(S);                                                                               \
+---
+> #define FREE_SEGS_LIST(N, S)      \
+>     if (S) {                      \
+>         clean_segment_list(N, S); \
+>         SET_FREE(S);              \
+137,140c137,140
+< #define VOID_2_FLOAT(A) (*((float *) (A)))
+< #define VOID_2_REAL(A)  (*((real_t *) (A)))
+< #define VOID_2_U32(A)   (*((uint32_t *) (A)))
+< #define VOID_2_U8(A)    (*((uint8_t *) (A)))
+---
+> #define VOID_2_FLOAT(A) (*((float *)(A)))
+> #define VOID_2_REAL(A)  (*((real_t *)(A)))
+> #define VOID_2_U32(A)   (*((uint32_t *)(A)))
+> #define VOID_2_U8(A)    (*((uint8_t *)(A)))
+143,148c143,148
+< #define ols_base_print(F, L, ...)                                                                  \
+<     do {                                                                                           \
+<         if (F) {                                                                                   \
+<             fprintf(F, "%s - [C:%d::%d] ", L, __LINE__, g_pid);                                    \
+<             fprintf(F, __VA_ARGS__);                                                               \
+<         }                                                                                          \
+---
+> #define ols_base_print(F, L, ...)                               \
+>     do {                                                        \
+>         if (F) {                                                \
+>             fprintf(F, "%s - [C:%d::%d] ", L, __LINE__, g_pid); \
+>             fprintf(F, __VA_ARGS__);                            \
+>         }                                                       \
+155,160c155,160
+< #define log_ols_print(...)                                                                         \
+<     do {                                                                                           \
+<         ols_base_print(g_log, "Log", __VA_ARGS__);                                                 \
+<         if (g_log) {                                                                               \
+<             fflush(g_log);                                                                         \
+<         }                                                                                          \
+---
+> #define log_ols_print(...)                         \
+>     do {                                           \
+>         ols_base_print(g_log, "Log", __VA_ARGS__); \
+>         if (g_log) {                               \
+>             fflush(g_log);                         \
+>         }                                          \
+163,168c163,168
+< #define dbg_pyerr(S)                                                                               \
+<     do {                                                                                           \
+<         print_delim();                                                                             \
+<         dbg_ols_print("%s\n", S);                                                                  \
+<         PyErr_Print();                                                                             \
+<         print_delim();                                                                             \
+---
+> #define dbg_pyerr(S)              \
+>     do {                          \
+>         print_delim();            \
+>         dbg_ols_print("%s\n", S); \
+>         PyErr_Print();            \
+>         print_delim();            \
+484,485c484,485
+< static float
+< get_float4(PyArrayObject *obj, npy_intp integ, npy_intp group, npy_intp row, npy_intp col);
+---
+> static float get_float4(
+>     PyArrayObject *obj, npy_intp integ, npy_intp group, npy_intp row, npy_intp col);
+497,498c497,498
+< static void
+< get_pixel_ramp_meta(struct pixel_ramp *pr, struct ramp_data *rd, npy_intp row, npy_intp col);
+---
+> static void get_pixel_ramp_meta(
+>     struct pixel_ramp *pr, struct ramp_data *rd, npy_intp row, npy_intp col);
+525,526c525,526
+< static real_t *
+< median_rate_get_data(real_t *data, npy_intp integ, struct ramp_data *rd, struct pixel_ramp *pr);
+---
+> static real_t *median_rate_get_data(
+>     real_t *data, npy_intp integ, struct ramp_data *rd, struct pixel_ramp *pr);
+528,529c528,529
+< static uint8_t *
+< median_rate_get_dq(uint8_t *data, npy_intp integ, struct ramp_data *rd, struct pixel_ramp *pr);
+---
+> static uint8_t *median_rate_get_dq(
+>     uint8_t *data, npy_intp integ, struct ramp_data *rd, struct pixel_ramp *pr);
+543,544c543,544
+< static PyObject *
+< package_results(struct rate_product *rate, struct rateint_product *rateints, struct ramp_data *rd);
+---
+> static PyObject *package_results(
+>     struct rate_product *rate, struct rateint_product *rateints, struct ramp_data *rd);
+564,565c564,565
+< static int
+< ramp_fit_pixel_integration_fit_slope(struct ramp_data *rd, struct pixel_ramp *pr, npy_intp integ);
+---
+> static int ramp_fit_pixel_integration_fit_slope(
+>     struct ramp_data *rd, struct pixel_ramp *pr, npy_intp integ);
+622,623c622,623
+< static void
+< print_cr_pixel_integ(struct pixel_ramp *pr, struct cr_list *crs, npy_intp integ, int line);
+---
+> static void print_cr_pixel_integ(
+>     struct pixel_ramp *pr, struct cr_list *crs, npy_intp integ, int line);
+743c743
+<     long long now_time = (long long) time(NULL);
+---
+>     long long now_time = (long long)time(NULL);
+814,817c814,817
+< #define SET_DEBUGGING                                                                              \
+<     do {                                                                                           \
+<         setlocale(LC_ALL, "en_US");                                                                \
+<         set_up_logger();                                                                           \
+---
+> #define SET_DEBUGGING               \
+>     do {                            \
+>         setlocale(LC_ALL, "en_US"); \
+>         set_up_logger();            \
+870c870
+<     if ((NULL == result) || (Py_None == (PyObject *) result)) {
+---
+>     if ((NULL == result) || (Py_None == (PyObject *)result)) {
+922c922
+<     seg = (struct simple_ll_node *) calloc(1, sizeof(*seg));
+---
+>     seg = (struct simple_ll_node *)calloc(1, sizeof(*seg));
+1268c1268
+<     struct cr_node *new_node = (struct cr_node *) calloc(1, sizeof(*new_node));
+---
+>     struct cr_node *new_node = (struct cr_node *)calloc(1, sizeof(*new_node));
+1272c1272
+<         PyErr_SetString(PyExc_MemoryError, (const char *) msg);
+---
+>         PyErr_SetString(PyExc_MemoryError, (const char *)msg);
+1345c1345
+<     opt_res->slope = (PyArrayObject *) PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+---
+>     opt_res->slope = (PyArrayObject *)PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+1350c1350
+<     opt_res->sigslope = (PyArrayObject *) PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+---
+>     opt_res->sigslope = (PyArrayObject *)PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+1355c1355
+<     opt_res->var_p = (PyArrayObject *) PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+---
+>     opt_res->var_p = (PyArrayObject *)PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+1360c1360
+<     opt_res->var_r = (PyArrayObject *) PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+---
+>     opt_res->var_r = (PyArrayObject *)PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+1365c1365
+<     opt_res->yint = (PyArrayObject *) PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+---
+>     opt_res->yint = (PyArrayObject *)PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+1370c1370
+<     opt_res->sigyint = (PyArrayObject *) PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+---
+>     opt_res->sigyint = (PyArrayObject *)PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+1375c1375
+<     opt_res->weights = (PyArrayObject *) PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+---
+>     opt_res->weights = (PyArrayObject *)PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+1383c1383
+<     opt_res->pedestal = (PyArrayObject *) PyArray_ZEROS(pnd, pdims, NPY_FLOAT, fortran);
+---
+>     opt_res->pedestal = (PyArrayObject *)PyArray_ZEROS(pnd, pdims, NPY_FLOAT, fortran);
+1390c1390
+<     opt_res->cr_mag = (PyArrayObject *) PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+---
+>     opt_res->cr_mag = (PyArrayObject *)PyArray_ZEROS(nd, dims, NPY_FLOAT, fortran);
+1421c1421
+<     struct pixel_ramp *pr = (struct pixel_ramp *) calloc(1, sizeof(*pr));
+---
+>     struct pixel_ramp *pr = (struct pixel_ramp *)calloc(1, sizeof(*pr));
+1427c1427
+<         PyErr_SetString(PyExc_MemoryError, (const char *) msg);
+---
+>         PyErr_SetString(PyExc_MemoryError, (const char *)msg);
+1437,1438c1437,1438
+<     pr->data = (real_t *) calloc(pr->ramp_sz, sizeof(pr->data[0]));
+<     pr->groupdq = (uint32_t *) calloc(pr->ramp_sz, sizeof(pr->groupdq[0]));
+---
+>     pr->data = (real_t *)calloc(pr->ramp_sz, sizeof(pr->data[0]));
+>     pr->groupdq = (uint32_t *)calloc(pr->ramp_sz, sizeof(pr->groupdq[0]));
+1440,1441c1440,1441
+<     if (((PyObject *) rd->orig_gdq) != Py_None) {
+<         pr->orig_gdq = (uint32_t *) calloc(pr->ramp_sz, sizeof(pr->orig_gdq[0]));
+---
+>     if (((PyObject *)rd->orig_gdq) != Py_None) {
+>         pr->orig_gdq = (uint32_t *)calloc(pr->ramp_sz, sizeof(pr->orig_gdq[0]));
+1445,1448c1445,1448
+<     pr->rateints = (struct pixel_fit *) calloc(pr->nints, sizeof(pr->rateints[0]));
+<     pr->stats = (struct integ_gdq_stats *) calloc(pr->nints, sizeof(pr->stats[0]));
+<     pr->segs = (struct segment_list *) calloc(pr->nints, sizeof(pr->segs[0]));
+<     pr->crs = (struct cr_list *) calloc(pr->nints, sizeof(pr->crs[0]));
+---
+>     pr->rateints = (struct pixel_fit *)calloc(pr->nints, sizeof(pr->rateints[0]));
+>     pr->stats = (struct integ_gdq_stats *)calloc(pr->nints, sizeof(pr->stats[0]));
+>     pr->segs = (struct segment_list *)calloc(pr->nints, sizeof(pr->segs[0]));
+>     pr->crs = (struct cr_list *)calloc(pr->nints, sizeof(pr->crs[0]));
+1457c1457
+<         PyErr_SetString(PyExc_MemoryError, (const char *) msg);
+---
+>         PyErr_SetString(PyExc_MemoryError, (const char *)msg);
+1483c1483
+<     rate->slope = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+---
+>     rate->slope = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+1488c1488
+<     rate->dq = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_UINT32, fortran);
+---
+>     rate->dq = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_UINT32, fortran);
+1493c1493
+<     rate->var_poisson = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+---
+>     rate->var_poisson = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+1498c1498
+<     rate->var_rnoise = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+---
+>     rate->var_rnoise = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+1503c1503
+<     rate->var_err = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+---
+>     rate->var_err = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+1519c1519
+<     PyErr_SetString(PyExc_MemoryError, (const char *) msg);
+---
+>     PyErr_SetString(PyExc_MemoryError, (const char *)msg);
+1542c1542
+<     rateint->slope = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+---
+>     rateint->slope = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+1547c1547
+<     rateint->dq = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_UINT32, fortran);
+---
+>     rateint->dq = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_UINT32, fortran);
+1552c1552
+<     rateint->var_poisson = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+---
+>     rateint->var_poisson = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+1557c1557
+<     rateint->var_rnoise = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+---
+>     rateint->var_rnoise = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+1562c1562
+<     rateint->var_err = (PyArrayObject *) PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+---
+>     rateint->var_err = (PyArrayObject *)PyArray_EMPTY(nd, dims, NPY_FLOAT, fortran);
+1578c1578
+<     PyErr_SetString(PyExc_MemoryError, (const char *) msg);
+---
+>     PyErr_SetString(PyExc_MemoryError, (const char *)msg);
+1726,1727c1726,1727
+<             } else if ((0 == pr->stats[integ].cnt_good) && ((PyObject *) rd->zframe) != Py_None) {
+<                 zframe = (real_t) rd->get_zframe(rd->zframe, integ, row, col);
+---
+>             } else if ((0 == pr->stats[integ].cnt_good) && ((PyObject *)rd->zframe) != Py_None) {
+>                 zframe = (real_t)rd->get_zframe(rd->zframe, integ, row, col);
+1767c1767
+<     if (((PyObject *) rd->orig_gdq) != Py_None) {
+---
+>     if (((PyObject *)rd->orig_gdq) != Py_None) {
+1793c1793
+<         pr->data[idx] = (real_t) rd->get_data(rd->data, integ, group, row, col);
+---
+>         pr->data[idx] = (real_t)rd->get_data(rd->data, integ, group, row, col);
+1814c1814
+<     pr->gain = (real_t) rd->get_gain(rd->gain, row, col);
+---
+>     pr->gain = (real_t)rd->get_gain(rd->gain, row, col);
+1821,1822c1821,1822
+<     pr->rnoise = (real_t) rd->get_rnoise(rd->rnoise, row, col);
+<     pr->dcurrent = (real_t) rd->get_dcurrent(rd->dcurrent, row, col);
+---
+>     pr->rnoise = (real_t)rd->get_rnoise(rd->rnoise, row, col);
+>     pr->dcurrent = (real_t)rd->get_dcurrent(rd->dcurrent, row, col);
+1937c1937
+<     rd->one_group_time = ((float) rd->nframes + 1.) * (float) rd->frame_time / 2.;
+---
+>     rd->one_group_time = ((float)rd->nframes + 1.) * (float)rd->frame_time / 2.;
+1942,1944c1942,1944
+<         rd->segs = (struct simple_ll_node **) calloc(rd->cube_sz, sizeof(rd->segs[0]));
+<         rd->crs = (struct cr_node **) calloc(rd->cube_sz, sizeof(rd->crs[0]));
+<         rd->pedestal = (real_t *) calloc(rd->cube_sz, sizeof(rd->pedestal[0]));
+---
+>         rd->segs = (struct simple_ll_node **)calloc(rd->cube_sz, sizeof(rd->segs[0]));
+>         rd->crs = (struct cr_node **)calloc(rd->cube_sz, sizeof(rd->crs[0]));
+>         rd->pedestal = (real_t *)calloc(rd->cube_sz, sizeof(rd->pedestal[0]));
+1968,1973c1968,1973
+<     rd->data = (PyArrayObject *) PyObject_GetAttrString(Py_ramp_data, "data");
+<     rd->groupdq = (PyArrayObject *) PyObject_GetAttrString(Py_ramp_data, "groupdq");
+<     rd->orig_gdq = (PyArrayObject *) PyObject_GetAttrString(Py_ramp_data, "orig_gdq");
+<     rd->pixeldq = (PyArrayObject *) PyObject_GetAttrString(Py_ramp_data, "pixeldq");
+<     rd->zframe = (PyArrayObject *) PyObject_GetAttrString(Py_ramp_data, "zeroframe");
+<     rd->dcurrent = (PyArrayObject *) PyObject_GetAttrString(Py_ramp_data, "average_dark_current");
+---
+>     rd->data = (PyArrayObject *)PyObject_GetAttrString(Py_ramp_data, "data");
+>     rd->groupdq = (PyArrayObject *)PyObject_GetAttrString(Py_ramp_data, "groupdq");
+>     rd->orig_gdq = (PyArrayObject *)PyObject_GetAttrString(Py_ramp_data, "orig_gdq");
+>     rd->pixeldq = (PyArrayObject *)PyObject_GetAttrString(Py_ramp_data, "pixeldq");
+>     rd->zframe = (PyArrayObject *)PyObject_GetAttrString(Py_ramp_data, "zeroframe");
+>     rd->dcurrent = (PyArrayObject *)PyObject_GetAttrString(Py_ramp_data, "average_dark_current");
+2051,2052c2051,2052
+<     rd->group_time = (real_t) py_ramp_data_get_float(Py_ramp_data, "group_time");
+<     rd->frame_time = (real_t) py_ramp_data_get_float(Py_ramp_data, "frame_time");
+---
+>     rd->group_time = (real_t)py_ramp_data_get_float(Py_ramp_data, "group_time");
+>     rd->frame_time = (real_t)py_ramp_data_get_float(Py_ramp_data, "frame_time");
+2113c2113
+<     if ((((PyObject *) rd->zframe) != Py_None) && (NPY_FLOAT != PyArray_TYPE(rd->zframe))) {
+---
+>     if ((((PyObject *)rd->zframe) != Py_None) && (NPY_FLOAT != PyArray_TYPE(rd->zframe))) {
+2193c2193
+<     pr->median_rate = accum_mrate / (real_t) rd->nints;
+---
+>     pr->median_rate = accum_mrate / (real_t)rd->nints;
+2207,2208c2207,2208
+<     real_t *int_data = (real_t *) calloc(pr->ngroups, sizeof(*int_data));
+<     uint8_t *int_dq = (uint8_t *) calloc(pr->ngroups, sizeof(*int_dq));
+---
+>     real_t *int_data = (real_t *)calloc(pr->ngroups, sizeof(*int_data));
+>     uint8_t *int_dq = (uint8_t *)calloc(pr->ngroups, sizeof(*int_dq));
+2255c2255
+<     pr->median_rate = accum_mrate /= (float) pr->nints;
+---
+>     pr->median_rate = accum_mrate /= (float)pr->nints;
+2315c2315
+<     real_t *loc_integ = (real_t *) calloc(pr->ngroups, sizeof(*loc_integ));
+---
+>     real_t *loc_integ = (real_t *)calloc(pr->ngroups, sizeof(*loc_integ));
+2442d2441
+< 
+2621c2620
+<     val = (float) PyFloat_AsDouble(Obj);
+---
+>     val = (float)PyFloat_AsDouble(Obj);
+2640c2639
+<     val = (int) PyLong_AsLong(Obj);
+---
+>     val = (int)PyLong_AsLong(Obj);
+2646,2652c2645,2651
+< #define DBG_RATE_INFO                                                                              \
+<     do {                                                                                           \
+<         dbg_ols_print("(%ld, %ld) median rate = %f\n", pr->row, pr->col, pr->median_rate);         \
+<         dbg_ols_print("Rate slope: %f\n", pr->rate.slope);                                         \
+<         dbg_ols_print("Rate DQ: %f\n", pr->rate.dq);                                               \
+<         dbg_ols_print("Rate var_p: %f\n", pr->rate.var_poisson);                                   \
+<         dbg_ols_print("Rate var_r: %f\n\n", pr->rate.var_rnoise);                                  \
+---
+> #define DBG_RATE_INFO                                                                      \
+>     do {                                                                                   \
+>         dbg_ols_print("(%ld, %ld) median rate = %f\n", pr->row, pr->col, pr->median_rate); \
+>         dbg_ols_print("Rate slope: %f\n", pr->rate.slope);                                 \
+>         dbg_ols_print("Rate DQ: %f\n", pr->rate.dq);                                       \
+>         dbg_ols_print("Rate var_p: %f\n", pr->rate.var_poisson);                           \
+>         dbg_ols_print("Rate var_r: %f\n\n", pr->rate.var_rnoise);                          \
+2834c2833
+<             seglen = (real_t) current->length;
+---
+>             seglen = (real_t)current->length;
+2903,2907c2902,2906
+< #define DBG_SEG_ID                                                                                 \
+<     do {                                                                                           \
+<         dbg_ols_print(                                                                             \
+<             "   *** [Integ: %ld] (%ld, %ld) Seg: %d, Length: %ld, Start: %ld, End: %ld\n", integ,  \
+<             pr->row, pr->col, segcnt, current->length, current->start, current->end);              \
+---
+> #define DBG_SEG_ID                                                                                \
+>     do {                                                                                          \
+>         dbg_ols_print(                                                                            \
+>             "   *** [Integ: %ld] (%ld, %ld) Seg: %d, Length: %ld, Start: %ld, End: %ld\n", integ, \
+>             pr->row, pr->col, segcnt, current->length, current->start, current->end);             \
+2910,2915c2909,2914
+< #define DBG_INTEG_INFO                                                                             \
+<     do {                                                                                           \
+<         dbg_ols_print("Integ %ld slope: %.10f\n", integ, pr->rateints[integ].slope);               \
+<         dbg_ols_print("Integ %ld dq: %.10f\n", integ, pr->rateints[integ].dq);                     \
+<         dbg_ols_print("Integ %ld var_p: %.10f\n", integ, pr->rateints[integ].var_poisson);         \
+<         dbg_ols_print("Integ %ld var_r: %.10f\n\n", integ, pr->rateints[integ].var_rnoise);        \
+---
+> #define DBG_INTEG_INFO                                                                      \
+>     do {                                                                                    \
+>         dbg_ols_print("Integ %ld slope: %.10f\n", integ, pr->rateints[integ].slope);        \
+>         dbg_ols_print("Integ %ld dq: %.10f\n", integ, pr->rateints[integ].dq);              \
+>         dbg_ols_print("Integ %ld var_p: %.10f\n", integ, pr->rateints[integ].var_poisson);  \
+>         dbg_ols_print("Integ %ld var_r: %.10f\n\n", integ, pr->rateints[integ].var_rnoise); \
+2918,2923c2917,2922
+< #define DBG_DEFAULT_SEG                                                                            \
+<     do {                                                                                           \
+<         dbg_ols_print("current->slope = %.10f\n", current->slope);                                 \
+<         dbg_ols_print("current->var_p = %.10f\n", current->var_p);                                 \
+<         dbg_ols_print("current->var_r = %.10f\n", current->var_r);                                 \
+<         dbg_ols_print("current->var_e = %.10f\n", current->var_e);                                 \
+---
+> #define DBG_DEFAULT_SEG                                            \
+>     do {                                                           \
+>         dbg_ols_print("current->slope = %.10f\n", current->slope); \
+>         dbg_ols_print("current->var_p = %.10f\n", current->var_p); \
+>         dbg_ols_print("current->var_r = %.10f\n", current->var_r); \
+>         dbg_ols_print("current->var_e = %.10f\n", current->var_e); \
+3187c3186
+<         _2nd_read = (real_t) seg->start + 1.;
+---
+>         _2nd_read = (real_t)seg->start + 1.;
+3213c3212
+<     rden = 6.; // seglen * seglen * seglen - seglen; where siglen = 2
+---
+>     rden = 6.;  // seglen * seglen * seglen - seglen; where siglen = 2
+3261c3260
+<     mid = (real_t) (seg->length - 1) / 2.;
+---
+>     mid = (real_t)(seg->length - 1) / 2.;
+3268c3267
+<         xval = (real_t) group;
+---
+>         xval = (real_t)group;
+3273c3272
+<         xval += (real_t) seg->start;
+---
+>         xval += (real_t)seg->start;
+3288,3297c3287,3296
+< #define DBG_OLS_CALCS                                                                              \
+<     do {                                                                                           \
+<         dbg_ols_print("sumx = %f\n", sumx);                                                        \
+<         dbg_ols_print("sumxx = %f\n", sumxx);                                                      \
+<         dbg_ols_print("sumy = %f\n", sumy);                                                        \
+<         dbg_ols_print("sumxy = %f\n", sumxy);                                                      \
+<         dbg_ols_print("sumw = %f\n", sumw);                                                        \
+<         dbg_ols_print("num = %f\n", num);                                                          \
+<         dbg_ols_print("den = %f\n", den);                                                          \
+<         dbg_ols_print("slope = %f\n", slope);                                                      \
+---
+> #define DBG_OLS_CALCS                         \
+>     do {                                      \
+>         dbg_ols_print("sumx = %f\n", sumx);   \
+>         dbg_ols_print("sumxx = %f\n", sumxx); \
+>         dbg_ols_print("sumy = %f\n", sumy);   \
+>         dbg_ols_print("sumxy = %f\n", sumxy); \
+>         dbg_ols_print("sumw = %f\n", sumw);   \
+>         dbg_ols_print("num = %f\n", num);     \
+>         dbg_ols_print("den = %f\n", den);     \
+>         dbg_ols_print("slope = %f\n", slope); \
+3333c3332
+<     seglen = (real_t) seg->length;
+---
+>     seglen = (real_t)seg->length;
+3410c3409
+<                 float_tmp = (float) rd->pedestal[idx];
+---
+>                 float_tmp = (float)rd->pedestal[idx];
+3433c3432
+<                     float_tmp = (float) current->slope;
+---
+>                     float_tmp = (float)current->slope;
+3441c3440
+<                     float_tmp = (float) current->sigslope;
+---
+>                     float_tmp = (float)current->sigslope;
+3449c3448
+<                     float_tmp = (float) current->var_p;
+---
+>                     float_tmp = (float)current->var_p;
+3457c3456
+<                     float_tmp = (float) current->var_r;
+---
+>                     float_tmp = (float)current->var_r;
+3465c3464
+<                     float_tmp = (float) current->yint;
+---
+>                     float_tmp = (float)current->yint;
+3473c3472
+<                     float_tmp = (float) current->sigyint;
+---
+>                     float_tmp = (float)current->sigyint;
+3481c3480
+<                     float_tmp = (float) current->weight;
+---
+>                     float_tmp = (float)current->weight;
+3508c3507
+<                         float_tmp = (float) cr_current->crmag;
+---
+>                         float_tmp = (float)cr_current->crmag;
+3542c3541
+<     float_tmp = (float) pr->rate.slope;
+---
+>     float_tmp = (float)pr->rate.slope;
+3553c3552
+<     float_tmp = (float) pr->rate.var_poisson;
+---
+>     float_tmp = (float)pr->rate.var_poisson;
+3561c3560
+<     float_tmp = (float) pr->rate.var_rnoise;
+---
+>     float_tmp = (float)pr->rate.var_rnoise;
+3569c3568
+<     float_tmp = (float) pr->rate.var_err;
+---
+>     float_tmp = (float)pr->rate.var_err;
+3579c3578
+<         float_tmp = (float) pr->rateints[integ].slope;
+---
+>         float_tmp = (float)pr->rateints[integ].slope;
+3590c3589
+<         float_tmp = (float) pr->rateints[integ].var_poisson;
+---
+>         float_tmp = (float)pr->rateints[integ].var_poisson;
+3598c3597
+<         float_tmp = (float) pr->rateints[integ].var_rnoise;
+---
+>         float_tmp = (float)pr->rateints[integ].var_rnoise;
+3606c3605
+<         float_tmp = (float) pr->rateints[integ].var_err;
+---
+>         float_tmp = (float)pr->rateints[integ].var_err;
