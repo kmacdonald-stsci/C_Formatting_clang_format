@@ -5,7 +5,8 @@ AlignConsecutiveMacros: true
 AlignEscapedNewlines: LeftWithLastLine
 AllowAllArgumentsOnNextLine: true
 AlwaysBreakAfterReturnType: None
-AlwaysBreakAfterDefinitionReturnType: TopLevel
+AlwaysBreakAfterDefinitionReturnType: None
+# AlwaysBreakAfterDefinitionReturnType: TopLevel
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Inline
@@ -26,6 +27,7 @@ PointerAlignment: Right
 
 ReflowComments: true
 
+SortIncludes: false
 SpaceAfterCStyleCast: true
 SpaceBeforeParens: ControlStatements
 
