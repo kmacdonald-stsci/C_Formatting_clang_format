@@ -23,6 +23,7 @@ IndentCaseLabels: true
 IndentWidth: 4
 InsertBraces: true
 
+PenaltyReturnTypeOnItsOwnLine: 1000000
 PointerAlignment: Right
 
 ReflowComments: true
