@@ -16,6 +16,8 @@ BreakBeforeBraces: Custom
 
 ColumnLimit: 100
 
+DerivePointerAlignment: false # Right alignment is set below
+
 IndentCaseLabels: true
 IndentWidth: 4
 InsertBraces: true
